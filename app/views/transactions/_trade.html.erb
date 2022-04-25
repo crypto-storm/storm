@@ -1,0 +1,4 @@
+<div>
+  <%= render partial: "purchases/purchase", locals: { purchase: trade.tx_in, coin: trade.tx_out.token.abbr } %>
+  <%= render partial: "sales/sale", locals: { sale: trade.tx_out, coin: trade.tx_in.token.abbr } %>
+</div>

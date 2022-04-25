@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>On chain tokens</h1>
+
+<div id="on_chain_tokens">
+  <% @on_chain_tokens.each do |on_chain_token| %>
+    <%= render on_chain_token %>
+    <p>
+      <%= link_to "Show this on chain token", on_chain_token %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New on chain token", new_on_chain_token_path %>

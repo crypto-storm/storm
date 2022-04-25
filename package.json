@@ -2,20 +2,30 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1",
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.1",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/line-clamp": "^0.3.1",
+    "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.4",
     "esbuild": "^0.14.38",
     "esbuild-rails": "^1.0.3",
     "postcss": "^8.4.12",
     "postcss-cli": "^9.1.0",
-    "postcss-nesting": "^10.1.4"
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-nesting": "^10.1.4",
+    "postcss-preset-env": "^7.4.3",
+    "tailwindcss": "^3.0.24"
   },
   "scripts": {
-    "build": "node esbuild.config.js",
-    "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css"
+    "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
+    "build": "node esbuild.config.js"
   },
   "devDependencies": {
-    "chokidar": "^3.5.3"
+    "chokidar": "^3.5.3",
+    "postcss-import": "^14.1.0"
   }
 }

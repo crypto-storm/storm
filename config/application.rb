@@ -20,5 +20,8 @@ module Storm
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # adds support for Services
+    config.autoload_paths += %W[#{config.root}/services #{config.root}/app/services/concerns]
   end
 end

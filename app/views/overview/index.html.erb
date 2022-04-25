@@ -1,0 +1,14 @@
+<div>
+  <h1 class="font-bold text-4xl">Overview</h1>
+
+  <div>
+    <% @assets.each do |token, balance| %>
+      <div class="flex mt-5">
+        <p class="mr-1">
+          <%= balance %>
+        </p>
+        <%= render Token.find(token) %>
+      </div>
+    <% end %>
+  </div>
+</div>

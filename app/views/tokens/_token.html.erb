@@ -1,0 +1,16 @@
+<%= turbo_frame_tag token do %>
+  <div class="flex">
+    <div class="flex items-center mr-1">
+      <%= image_tag(token.logo, width: 24, height: 24, class: "rounded mr-1 object-contain") if token.logo.attached? %>
+      <%= token.abbr %>
+    </div>
+
+    <div>
+      <% if (action_name == "index" || action_name == "create") && controller_name == "tokens" %>
+        <%= link_to edit_token_path(token), class: "mr-1" do %>
+          <%= fa_icon 'pencil' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

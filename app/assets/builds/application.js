@@ -2,12 +2,17 @@
 (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __esm = (fn, res) => function __init() {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
   };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __publicField = (obj, key, value) => {
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+    return value;
   };
 
   // ../../node_modules/@rails/actioncable/src/adapters.js
@@ -5666,13 +5671,16 @@
   application.debug = false;
   window.Stimulus = application;
 
-  // controllers/hello_controller.js
-  var hello_controller_default = class extends Controller {
-    connect() {
-      this.element.textContent = "Hello World!";
+  // controllers/navbar_controller.js
+  var navbar_controller_default = class extends Controller {
+    toggleNavbar() {
+      this.toggleTarget.classList.toggle("hidden");
+      this.burgerTarget.classList.toggle("hidden");
+      this.crossTarget.classList.toggle("hidden");
     }
   };
+  __publicField(navbar_controller_default, "targets", ["toggle", "cross", "burger"]);
 
   // controllers/index.js
-  application.register("hello", hello_controller_default);
+  application.register("navbar", navbar_controller_default);
 })();

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @transaction %>
+
+<div>
+  <%= link_to "Edit this transaction", edit_transaction_path(@transaction), class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer mr-1" %> |
+  <%= link_to "Back to transactions", transactions_path %>
+
+  <%= button_to "Destroy this transaction", @transaction, method: :delete %>
+</div>

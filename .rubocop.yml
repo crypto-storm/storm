@@ -5,3 +5,10 @@ require:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/MethodLength:
+  Max: 15
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'

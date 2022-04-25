@@ -1,0 +1,23 @@
+<%= turbo_frame_tag transaction do %>
+  <div class="flex items-center">
+    <div class="mr-1">
+      <% if transaction.trade? %>
+        <%= render partial: "transactions/trade", locals: { trade: transaction } %>
+      <% elsif transaction.purchase? %>
+        <%= render partial: "purchases/purchase", locals: { purchase: transaction.tx_in, coin: 'USD' } %>
+      <% else %>
+        <%= render partial: "sales/sale", locals: { sale: transaction.tx_out, coin: 'USD' } %>
+      <% end %>
+    </div>
+
+    <div class="flex">
+      <%= link_to edit_transaction_path(transaction), class: "mr-1" do %>
+        <%= fa_icon 'pencil' %>
+      <% end %>
+
+      <%= button_to transaction_path(transaction), method: :delete, data: { turbo_frame: "_top" } do %>
+        <%= fa_icon 'circle-xmark' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

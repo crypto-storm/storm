@@ -1,0 +1,14 @@
+<%= turbo_frame_tag chain do %>
+  <div class="flex">
+    <div class="flex items-center mr-1">
+      <%= image_tag(chain.logo, width: 24, height: 24, class: "rounded mr-1 object-contain") if chain.logo.attached? %>
+      <%= chain.name %>
+    </div>
+
+    <div class="flex">
+      <%= link_to edit_chain_path(chain), class: "mr-1" do %>
+        <%= fa_icon 'pencil' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

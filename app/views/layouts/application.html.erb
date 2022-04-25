@@ -8,9 +8,14 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   </head>
 
+  <%= render partial: "navbar/navbar" %>
+
   <body>
-    <%= yield %>
+    <main class="container mx-auto mt-16 px-5 flex">
+      <%= yield %>
+    </main>
   </body>
 </html>

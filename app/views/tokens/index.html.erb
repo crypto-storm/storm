@@ -1,0 +1,25 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div>
+    <div class="flex justify-between items-center">
+      <h1 class="font-bold text-4xl">Tokens</h1>
+      <%= link_to "Add token", new_token_path, class: "btn-primary", data: { turbo_frame: dom_id(Token.new) } %>
+    </div>
+
+      <%= turbo_frame_tag dom_id(Token.new) do %>
+      <% end %>
+
+      <%= turbo_frame_tag "tokens" do %>
+        <div class="min-w-full">
+          <% @tokens.each do |token| %>
+            <div class="mt-10">
+              <%= render token %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+  </div>
+</div>

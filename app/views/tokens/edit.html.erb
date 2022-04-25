@@ -1,0 +1,12 @@
+<h1>Editing token</h1>
+
+<%= turbo_frame_tag @token do %>
+  <%= render "form", token: @token %>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Show this token", @token %> |
+  <%= link_to "Back to tokens", tokens_path %>
+</div>
