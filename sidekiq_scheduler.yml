@@ -1,0 +1,4 @@
+sync_token_prices:
+  cron: '* 0 * * * *'
+  class: SyncTokenPricesJob
+  description: 'Syncs token prices'

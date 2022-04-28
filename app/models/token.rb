@@ -5,4 +5,6 @@ class Token < ApplicationRecord
   belongs_to :native_chain, class_name: 'Chain', optional: true, inverse_of: :native_token
   has_many :on_chain_tokens, dependent: :destroy
   has_many :transaction_data, dependent: :destroy
+
+  has_many :historic_rates, dependent: :destroy
 end

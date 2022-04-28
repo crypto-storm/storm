@@ -10,6 +10,7 @@
     "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.4",
+    "chart.js": "^3.7.1",
     "esbuild": "^0.14.38",
     "esbuild-rails": "^1.0.3",
     "postcss": "^8.4.12",

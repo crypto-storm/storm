@@ -1,0 +1,14 @@
+<% assets.each do |token, data| %>
+  <%= render Token.find(token) %>
+  <div class="mb-5">
+    <p class="mr-1">
+      <%= "Amount: #{data.amount}" %>
+    </p>
+    <p class="mr-1">
+      <%= "Total: #{data.total}$" %>
+    </p>
+    <p class="mr-1">
+      <%= "Rate: #{data.rate}$" %>
+    </p>
+  </div>
+<% end %>

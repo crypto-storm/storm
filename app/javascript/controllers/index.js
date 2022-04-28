@@ -6,3 +6,9 @@ import { application } from "./application"
 
 import NavbarController from "./navbar_controller"
 application.register("navbar", NavbarController)
+
+import PieChartController from "./pie_chart_controller"
+application.register("pie-chart", PieChartController)
+
+import BarChartController from "./bar_chart_controller"
+application.register("bar-chart", BarChartController)

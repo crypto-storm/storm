@@ -9,6 +9,8 @@ class Transaction < ApplicationRecord
 
   before_create :set_rates
 
+  scope :in_interval, ->(first, last) { where(date: first..last) }
+
   def set_rates
     return unless trade?
 

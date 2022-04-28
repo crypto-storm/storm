@@ -3,3 +3,4 @@ js: yarn build --watch
 css: yarn build:css --watch
 
 guard: bundle exec guard
+worker: bundle exec sidekiq
