@@ -29,7 +29,7 @@ namespace :historic_rate do
     client = CoingeckoRuby::Client.new
     initial_date = Time.zone.today - 5.years
     final_date = Time.zone.today
-    dates = (initial_date..final_date)
+    dates = (initial_date..final_date).to_a.reverse
 
     Token.find_each do |token|
       puts "Loading data for #{token.name}"
@@ -37,16 +37,21 @@ namespace :historic_rate do
         next if token.historic_rates.exists?(date:)
 
         coin_gecko_token = CoinGeckoToken.find_by(name: token.name.delete(' '))&.slug
+        coin_gecko_token ||= CoinGeckoToken.find_by(name: token.name)&.slug
+        coin_gecko_token ||= CoinGeckoToken.find_by(symbol: token.abbr.downcase)&.slug
 
         if coin_gecko_token
           queue.shift
 
           rate = price_on_date(client, coin_gecko_token, date)
+          break if rate.nil?
+
           HistoricRate.create(token:, date:, rate:)
 
           puts "#{token.name} costed #{rate} at #{date}"
         else
-          puts "Skipped #{token.name}"
+          puts "Skipped #{token.name} because it doesn't exist on coingecko."
+          break
         end
       end
     end
