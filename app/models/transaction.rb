@@ -18,6 +18,14 @@ class Transaction < ApplicationRecord
     tx_out.rate = tx_in.amount / tx_out.amount
   end
 
+  def profit?
+    purchase? && tx_in.rate.zero?
+  end
+
+  def loss?
+    sale? && tx_out.rate.zero?
+  end
+
   def purchase?
     type == :purchase
   end

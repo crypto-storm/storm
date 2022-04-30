@@ -1,108 +1,40 @@
 # frozen_string_literal: true
 
 # rubocop:disable Naming/VariableName
-
-def set_logo(object, filename)
-  path = Rails.root.join('app/assets/images/')
-  object.logo.attach(io: File.open(path.join(filename)), filename:)
-  object.save
-end
+# rubocop:disable Lint/UselessAssignment
 
 # Chains
-cardano = Chain.new(name: 'Cardano')
-set_logo(cardano, 'cardano.jpg')
-
-ethereum = Chain.new(name: 'Ethereum')
-set_logo(ethereum, 'eth.png')
-
-avalanche = Chain.new(name: 'Avalanche')
-set_logo(avalanche, 'avax.png')
-
-fantom = Chain.new(name: 'Fantom')
-set_logo(fantom, 'fantom.png')
-
-harmony = Chain.new(name: 'Harmony')
-set_logo(harmony, 'one.png')
-
-near = Chain.new(name: 'NEAR Protocol')
-set_logo(near, 'near.jpeg')
-
-Rails.logger.debug 'Built chains!'
-
+cardano = Chain.find_by(name: 'Cardano')
+ethereum = Chain.find_by(name: 'Ethereum')
+avalanche = Chain.find_by(name: 'Avalanche')
+fantom = Chain.find_by(name: 'Fantom')
+harmony = Chain.find_by(name: 'Harmony')
+near = Chain.find_by(name: 'NEAR Protocol')
 # Native tokens
-ada = Token.new(name: 'Cardano', abbr: 'ADA', native_chain: cardano)
-set_logo(ada, 'cardano.jpg')
-
-eth = Token.new(name: 'Ethereum', abbr: 'ETH', native_chain: ethereum)
-set_logo(eth, 'eth.png')
-
-avax = Token.new(name: 'Avalanche', abbr: 'AVAX', native_chain: avalanche)
-set_logo(avax, 'avax.png')
-
-ftm = Token.new(name: 'Fantom', abbr: 'FTM', native_chain: fantom)
-set_logo(ftm, 'fantom.png')
-
-one = Token.new(name: 'Harmony', abbr: 'ONE', native_chain: harmony)
-set_logo(one, 'one.png')
-
-near = Token.new(name: 'NEAR Protocol', abbr: 'NEAR', native_chain: near)
-set_logo(near, 'near.jpeg')
-
-Rails.logger.debug 'Built tokens!'
-
+ada = Token.find_by(name: 'Cardano', abbr: 'ADA', native_chain: cardano)
+eth = Token.find_by(name: 'Ethereum', abbr: 'ETH', native_chain: ethereum)
+avax = Token.find_by(name: 'Avalanche', abbr: 'AVAX', native_chain: avalanche)
+ftm = Token.find_by(name: 'Fantom', abbr: 'FTM', native_chain: fantom)
+one = Token.find_by(name: 'Harmony', abbr: 'ONE', native_chain: harmony)
+near = Token.find_by(name: 'NEAR Protocol', abbr: 'NEAR', native_chain: near)
 # ERCs
-geist = Token.new(name: 'Geist Finance', abbr: 'GEIST')
-set_logo(geist, 'geist.png')
-
-wsOHM = Token.new(name: 'Wrapped Staked Olympus', abbr: 'wsOHM')
-set_logo(wsOHM, 'wsOHM.png')
-
-jewel = Token.new(name: 'DeFi Kingdoms', abbr: 'JEWEL')
-set_logo(jewel, 'jewel.png')
-
-usdc = Token.new(name: 'USD Coin', abbr: 'USDC')
-set_logo(usdc, 'usdc.png')
-
-mim = Token.new(name: 'Magic Internet Money', abbr: 'MIM')
-set_logo(mim, 'mim.png')
-
-dai = Token.new(name: 'Dai', abbr: 'DAI')
-set_logo(dai, 'dai.png')
-
-usdt = Token.new(name: 'Tether', abbr: 'USDT')
-set_logo(usdt, 'usdt.png')
-
-our = Token.new(name: 'Ouranos', abbr: 'OUR')
-set_logo(our, 'our.png')
-
-medal = Token.new(name: 'MEDAL', abbr: 'MEDAL')
-set_logo(medal, 'medal.png')
-
-exc = Token.new(name: 'Excalibur', abbr: 'EXC')
-set_logo(exc, 'exc.png')
-
-boo = Token.new(name: 'SpookySwap', abbr: 'BOO')
-set_logo(boo, 'boo.png')
-
-xBOO = Token.new(name: 'Boo MirrorWorld', abbr: 'xBOO')
-set_logo(xBOO, 'xBOO.webp')
-
-tshare = Token.new(name: 'Tomb Shares', abbr: 'TSHARE')
-set_logo(tshare, 'tshare.png')
-
-tomb = Token.new(name: 'Tomb', abbr: 'TOMB')
-set_logo(tomb, 'tomb.png')
-
-lqdr = Token.new(name: 'Liquid Driver', abbr: 'LQDR')
-set_logo(lqdr, 'lqdr.png')
-
-ape = Token.new(name: 'ApeCoin', abbr: 'APE')
-set_logo(ape, 'ape.png')
-
-mai = Token.new(name: 'MIMATIC', abbr: 'MAI')
-set_logo(mai, 'mai.webp')
-
-Rails.logger.debug 'Built ERCs!'
+geist = Token.find_by(name: 'Geist Finance', abbr: 'GEIST')
+wsOHM = Token.find_by(name: 'Wrapped Staked Olympus', abbr: 'wsOHM')
+jewel = Token.find_by(name: 'DeFi Kingdoms', abbr: 'JEWEL')
+usdc = Token.find_by(name: 'USD Coin', abbr: 'USDC')
+mim = Token.find_by(name: 'Magic Internet Money', abbr: 'MIM')
+dai = Token.find_by(name: 'Dai', abbr: 'DAI')
+usdt = Token.find_by(name: 'Tether', abbr: 'USDT')
+our = Token.find_by(name: 'Ouranos', abbr: 'OUR')
+medal = Token.find_by(name: 'MEDAL', abbr: 'MEDAL')
+exc = Token.find_by(name: 'Excalibur', abbr: 'EXC')
+boo = Token.find_by(name: 'SpookySwap', abbr: 'BOO')
+xBOO = Token.find_by(name: 'Boo MirrorWorld', abbr: 'xBOO')
+tshare = Token.find_by(name: 'Tomb Shares', abbr: 'TSHARE')
+tomb = Token.find_by(name: 'Tomb', abbr: 'TOMB')
+lqdr = Token.find_by(name: 'Liquid Driver', abbr: 'LQDR')
+ape = Token.find_by(name: 'ApeCoin', abbr: 'APE')
+mai = Token.find_by(name: 'MIMATIC', abbr: 'MAI')
 
 # Transactions
 def sale(token:, amount:, rate:, date:)
@@ -177,5 +109,5 @@ trade(t_in: lqdr, amount_in: 25.5, t_out: ftm, amount_out: 235.147, date: '2022-
 purchase(token: ape, amount: 46.16424493, rate: 22.4284, date: '2022-04-29')
 trade(t_out: mai, amount_out: 42.0706, t_in: ftm, amount_in: 49.453774, date: '2022-04-30')
 
-Rails.logger.debug 'Built transactions!'
 # rubocop:enable Naming/VariableName
+# rubocop:enable Lint/UselessAssignment

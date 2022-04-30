@@ -9,5 +9,6 @@ class OverviewController < ApplicationController
       Token.find_by(id: token_id)&.abbr || 'Others'
     end
     @evolution = portfolio.evolution.reject { |_, value| value.zero? }
+    @assets = @assets.reject { |_, data| data.amount.zero? }
   end
 end
