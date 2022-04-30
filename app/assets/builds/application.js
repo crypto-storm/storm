@@ -18550,7 +18550,7 @@
     distribution: Object
   });
 
-  // controllers/bar_chart_controller.js
+  // controllers/line_chart_controller.js
   var CHART_COLORS2 = {
     red: "rgb(255, 99, 132)",
     orange: "rgb(255, 159, 64)",
@@ -18560,11 +18560,11 @@
     purple: "rgb(153, 102, 255)",
     grey: "rgb(201, 203, 207)"
   };
-  var bar_chart_controller_default = class extends Controller {
+  var line_chart_controller_default = class extends Controller {
     connect() {
-      this.pieChart();
+      this.lineChart();
     }
-    pieChart() {
+    lineChart() {
       const data = {
         labels: Object.keys(this.distributionValue),
         datasets: [
@@ -18579,6 +18579,11 @@
         type: "line",
         data,
         options: {
+          interaction: {
+            axis: "x",
+            mode: "nearest",
+            intersect: false
+          },
           responsive: true,
           plugins: {
             legend: {
@@ -18591,18 +18596,18 @@
           }
         }
       };
-      const myChart = new auto_esm_default(this.barTarget, config);
+      const chart = new auto_esm_default(this.lineTarget, config);
     }
   };
-  __publicField(bar_chart_controller_default, "targets", ["bar"]);
-  __publicField(bar_chart_controller_default, "values", {
+  __publicField(line_chart_controller_default, "targets", ["line"]);
+  __publicField(line_chart_controller_default, "values", {
     distribution: Object
   });
 
   // controllers/index.js
   application.register("navbar", navbar_controller_default);
   application.register("pie-chart", pie_chart_controller_default);
-  application.register("bar-chart", bar_chart_controller_default);
+  application.register("line-chart", line_chart_controller_default);
 })();
 /*!
  * @kurkle/color v0.1.9

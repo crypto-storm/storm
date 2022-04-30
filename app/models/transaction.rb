@@ -55,7 +55,7 @@ class Transaction < ApplicationRecord
 
     liquidity = BuildPortfolio.call[tx_out.token.id]
 
-    errors.add(:base, "Not enough #{tx_out.token.abbr} to finish #{type}!") if liquidity < tx_out.amount
+    errors.add(:base, "Not enough #{tx_out.token.abbr} to finish #{type}!") if liquidity.amount < tx_out.amount
   end
 
   def not_empty

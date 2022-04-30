@@ -10,5 +10,5 @@ application.register("navbar", NavbarController)
 import PieChartController from "./pie_chart_controller"
 application.register("pie-chart", PieChartController)
 
-import BarChartController from "./bar_chart_controller"
-application.register("bar-chart", BarChartController)
+import LineChartController from "./line_chart_controller"
+application.register("line-chart", LineChartController)

@@ -12,16 +12,16 @@ const CHART_COLORS = {
 };
 
 export default class extends Controller {
-  static targets = ["bar"]
+  static targets = ["line"]
   static values = {
     distribution: Object
   }
 
   connect() {
-    this.pieChart()
+    this.lineChart()
   }
 
-  pieChart() {
+  lineChart() {
     const data = {
       labels: Object.keys(this.distributionValue),
       datasets: [
@@ -37,6 +37,11 @@ export default class extends Controller {
       type: 'line',
       data: data,
       options: {
+        interaction: {
+          axis: 'x',
+          mode: 'nearest',
+          intersect: false
+        },
         responsive: true,
         plugins: {
           legend: {
@@ -50,6 +55,6 @@ export default class extends Controller {
       },
     };
 
-    const myChart = new Chart(this.barTarget, config)
+    const chart = new Chart(this.lineTarget, config)
   }
 }

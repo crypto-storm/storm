@@ -56,15 +56,15 @@ def trade(t_in:, amount_in:, t_out:, amount_out:, date:)
   t.save(validate: false)
 end
 
-purchase(token: geist, amount: 197.778, rate: 0.6, date: '2021-10-03')
 purchase(token: dai, amount: 109.89, rate: 1, date: '2021-11-09')
 purchase(token: ada, amount: 105.763, rate: 2.27, date: '2021-11-09')
+purchase(token: geist, amount: 197.778, rate: 0.6, date: '2021-11-15')
 purchase(token: avax, amount: 1.346, rate: 97.98, date: '2021-11-16')
 trade(t_out: avax, amount_out: 1.3, t_in: wsOHM, amount_in: 0.004, date: '2021-11-16')
 purchase(token: ftm, amount: 58, rate: 2.36, date: '2021-11-23')
 purchase(token: ada, amount: 88.87, rate: 1.53, date: '2021-11-26')
 purchase(token: ada, amount: 85, rate: 1.26, date: '2021-12-03')
-purchase(token: one, amount: 105.75, rate: 0.27, date: '2022-01-01')
+purchase(token: one, amount: 105.75, rate: 0.27, date: '2021-12-10')
 trade(t_in: jewel, amount_in: 1, t_out: one, amount_out: 75, date: '2021-12-10')
 purchase(token: ftm, amount: 35.9, rate: 2.92, date: '2022-01-05')
 purchase(token: usdc, amount: 225, rate: 1, date: '2022-01-05')
@@ -108,6 +108,10 @@ purchase(token: ftm, amount: 235.147, rate: 1.063, date: '2022-04-23')
 trade(t_in: lqdr, amount_in: 25.5, t_out: ftm, amount_out: 235.147, date: '2022-04-23')
 purchase(token: ape, amount: 46.16424493, rate: 22.4284, date: '2022-04-29')
 trade(t_out: mai, amount_out: 42.0706, t_in: ftm, amount_in: 49.453774, date: '2022-04-30')
+
+TransactionDatum.where.not(out: nil) do |t|
+  t.update(amount: -t.amount)
+end
 
 # rubocop:enable Naming/VariableName
 # rubocop:enable Lint/UselessAssignment

@@ -1,9 +1,17 @@
-<div
-  data-controller="bar-chart"
-  data-bar-chart-distribution-value=<%= evolution.to_json %>>
-  <canvas
-    data-bar-chart-target="bar"
-    width="400"
-    height="400">
-  </canvas>
+<div id="line-chart">
+  <div class="flex justify-between">
+    <div></div>
+    <div class="flex">
+      <% options = ["24H", "7D", "1M", "3M", "1Y"] %>
+      <% options.each do |option| %>
+        <% is_selected = type == option %>
+        <%= button_to option, charts_path(type: option), class: "btn-primary #{is_selected ? "bg-blue-400 cursor-auto" : nil}", disabled: is_selected %>
+      <% end %>
+    </div>
+  </div>
+  <div
+    data-controller="line-chart"
+    data-line-chart-distribution-value=<%= evolution.to_json %>>
+    <canvas data-line-chart-target="line" height="400" width="1200"/>
+  </div>
 </div>

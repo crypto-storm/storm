@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :sales, only: %i[new create]
 
   resources :overview, only: %i[index]
+  resources :charts, only: %i[create]
 
   root 'overview#index'
 end

@@ -8,7 +8,17 @@ class TransactionDatum < ApplicationRecord
   validates :amount, presence: true
   validates :rate, presence: true
 
+  before_create :make_amount_negative
+
   def total
     amount * rate
+  end
+
+  private
+
+  def make_amount_negative
+    return unless out.present? && amount.positive?
+
+    self.amount = -amount
   end
 end

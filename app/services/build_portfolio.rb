@@ -8,7 +8,7 @@ class BuildPortfolio < ApplicationService
   def call
     @assets = build_assets
     @assets = inject_prices
-    OpenStruct.new(assets: @assets, evolution: build_evolution)
+    @assets
   end
 
   private
@@ -37,30 +37,14 @@ class BuildPortfolio < ApplicationService
       if transaction.purchase?
         assets[tx_in.token.id] += tx_in.amount
       elsif transaction.sale?
-        assets[tx_out.token.id] -= tx_out.amount
+        assets[tx_out.token.id] += tx_out.amount
       elsif transaction.trade?
         assets[tx_in.token.id] += tx_in.amount
-        assets[tx_out.token.id] -= tx_out.amount
+        assets[tx_out.token.id] += tx_out.amount
       end
     end
 
     assets
-  end
-
-  def build_evolution
-    evolution = Hash.new(0)
-    today = Time.zone.today
-    year_ago = today - 1.year
-
-    (year_ago..today).step(1.month.in_days.to_i).each do |date|
-      transactions = @transactions.in_interval(year_ago, date)
-      assets = build_assets(transactions)
-      evolution[date] = inject_prices(assets, date).values.reduce(0) do |acc, data|
-        data.total ? acc + data.total : acc
-      end.to_f
-    end
-
-    evolution
   end
   # rubocop:enable Metrics/AbcSize
 end
