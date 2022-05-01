@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show edit update destroy]
 
   def index
-    @transactions = Transaction.all
+    @transactions = Transaction.order(date: :desc).all
   end
 
   def show; end
