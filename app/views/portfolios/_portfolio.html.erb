@@ -1,0 +1,16 @@
+<div class="flex justify-between my-5">
+  <div></div>
+  <%= turbo_frame_tag "change_portfolio", target: "_top" do %>
+    <%= button_to change_active_portfolios_path(id: portfolio.id), method: :put do %>
+      <p class="mr-2"><%= portfolio.name %></p>
+    <% end %>
+  <% end %>
+  <div class="flex">
+    <%= link_to edit_portfolio_path(portfolio), class: "mr-1" do %>
+      <%= fa_icon 'pencil' %>
+    <% end %>
+    <%= button_to portfolio_path(portfolio), method: :delete, data: { turbo_frame: "_top" } do %>
+      <%= fa_icon 'circle-xmark' %>
+    <% end %>
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
 class ChartsController < ApplicationController
   def create
-    evolution = BuildEvolution.call
+    evolution = BuildEvolution.call(@portfolio)
 
     type_to_key = {
       '24H' => :weekly,

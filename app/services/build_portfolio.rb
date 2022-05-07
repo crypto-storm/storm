@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class BuildPortfolio < ApplicationService
-  def initialize(transactions = Transaction.all)
-    @transactions = transactions
+  def initialize(portfolio)
+    @transactions = portfolio.transactions
   end
 
   def call

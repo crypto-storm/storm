@@ -1,0 +1,14 @@
+<%= turbo_frame_tag :modal, target: "_top" do %>
+    <div data-controller="extended-modal">
+        <div
+            data-extended-modal-target="container"
+            data-action="click->extended-modal#closeBackground keyup@window->extended-modal#closeWithKeyboard"
+            class="animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center bg-black/25"
+            style="z-index: 9999;"
+        >
+            <div class="max-h-screen w-full relative px-4 mx-auto my-2 md:my-18 lg:my-36 lg:px-0 lg:w-3/4">
+                <%= yield %>
+            </div>
+        </div>
+    </div>
+<% end %>

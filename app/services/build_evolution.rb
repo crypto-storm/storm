@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class BuildEvolution < ApplicationService
-  def initialize
+  def initialize(portfolio)
+    @portfolio = portfolio
     @history = build_yearly_history
   end
 
@@ -19,6 +20,7 @@ class BuildEvolution < ApplicationService
       JOIN tokens tk ON tk.id = td.token_id
       JOIN historic_rates hr ON hr.token_id = tk.id AND hr.date = '#{date}'
       WHERE t.date <= '#{date}'
+      AND t.portfolio_id = '#{@portfolio.id}'
       GROUP BY tk.abbr, hr.rate
     SQL
 

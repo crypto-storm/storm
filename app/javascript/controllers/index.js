@@ -12,3 +12,9 @@ application.register("pie-chart", PieChartController)
 
 import LineChartController from "./line_chart_controller"
 application.register("line-chart", LineChartController)
+
+import SidebarController from "./sidebar_controller"
+application.register("sidebar", SidebarController)
+
+import ExtendedModal from "./extended_modal_controller"
+application.register('extended-modal', ExtendedModal)

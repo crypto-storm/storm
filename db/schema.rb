@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_01_092314) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,6 +76,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_092314) do
     t.index ["token_id"], name: "index_on_chain_tokens_on_token_id"
   end
 
+  create_table "portfolios", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tokens", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -102,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_092314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "date", precision: nil
+    t.bigint "portfolio_id", default: 1, null: false
+    t.index ["portfolio_id"], name: "index_transactions_on_portfolio_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

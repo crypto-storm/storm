@@ -11,11 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   </head>
 
-  <%= render partial: "navbar/navbar" %>
+  <%= render "navbar/navbar" %>
+  <%= turbo_frame_tag :modal %>
 
   <body>
-    <main class="container mx-auto mt-16 px-5 flex">
-      <%= yield %>
+    <main class="flex max-w-screen">
+      <%= render "portfolios/selector" %>
+      <div class="container mx-auto mt-8 px-5">
+
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

@@ -15,6 +15,11 @@ Rails.application.routes.draw do
 
   resources :overview, only: %i[index]
   resources :charts, only: %i[create]
+  resources :portfolios do
+    collection do
+      put :change_active
+    end
+  end
 
   root 'overview#index'
 end

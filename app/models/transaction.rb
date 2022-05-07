@@ -3,6 +3,7 @@
 class Transaction < ApplicationRecord
   has_one :tx_in, class_name: 'TransactionDatum', dependent: :destroy, foreign_key: :in_id, inverse_of: :in
   has_one :tx_out, class_name: 'TransactionDatum', dependent: :destroy, foreign_key: :out_id, inverse_of: :out
+  belongs_to :portfolio
 
   validate :not_empty
   validate :enough_liquidity
@@ -53,7 +54,7 @@ class Transaction < ApplicationRecord
   def enough_liquidity
     return if purchase?
 
-    liquidity = BuildPortfolio.call[tx_out.token.id]
+    liquidity = BuildPortfolio.call(portfolio)[tx_out.token.id]
 
     errors.add(:base, "Not enough #{tx_out.token.abbr} to finish #{type}!") if liquidity.amount < tx_out.amount
   end

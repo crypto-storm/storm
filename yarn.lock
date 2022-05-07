@@ -66,7 +66,7 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.1.1.tgz#bf5d45611ab74890be386712a0e5d998c65ee2a1"
   integrity sha512-J/3yg2AIXc9wznaVqpHVX3Wa5jwKovVF0AMYSnbmcXTiL3PpRPfF58pzWucCwEiCJBp+hCNRLWClTomD8SseKg==
 
-"@hotwired/stimulus@^3.0.1":
+"@hotwired/stimulus@>=3.0.0", "@hotwired/stimulus@^3.0.1":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.0.1.tgz"
   integrity sha512-oHsJhgY2cip+K2ED7vKUNd2P+BEswVhrCYcJ802DSsblJFv7mPFVk3cQKvm2vHgHeDVdnj7oOKrBbzp1u8D+KA==
@@ -109,6 +109,11 @@
   version "7.0.2"
   resolved "https://registry.npmjs.org/@rails/actioncable/-/actioncable-7.0.2.tgz"
   integrity sha512-G26maXW1Kx0LxQdmNNuNjQlRO/QlXNr3QfuwKiOKb5FZQGYe2OwtHTGXBAjSoiu4dW36XYMT/+L1Wo1Yov4ZXA==
+
+"@rails/ujs@^7.0.2-4":
+  version "7.0.2-4"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.2-4.tgz#199b071e9f07c5a341006c368f7adc764dc0a3d9"
+  integrity sha512-P5DGRBx0bP/VDqKCWYHNAQQrRuyQ4QXgFwfMPyboBjKyZiaicotm2CYyTLxYX6vbB4RAd33jUaddeeDq8Q/0CA==
 
 "@tailwindcss/aspect-ratio@^0.4.0":
   version "0.4.0"
@@ -1187,6 +1192,13 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+tailwindcss-stimulus-components@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/tailwindcss-stimulus-components/-/tailwindcss-stimulus-components-3.0.4.tgz#598a880aed1a4966c2bf85fcc9c65fb63d02d2f0"
+  integrity sha512-kv4CHEcTvZSmthV6PseSdnW/QqKh237fZrvbNKNhWeYsTuEnOrKvdbR+3CmpuTok7L4XgEXk+XOFfo7AMhhtAA==
+  dependencies:
+    "@hotwired/stimulus" ">=3.0.0"
 
 tailwindcss@^3.0.24:
   version "3.0.24"
