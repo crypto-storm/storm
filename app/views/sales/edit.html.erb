@@ -1,13 +1,14 @@
 <%= render "shared/modal" do %>
-  <h1>New sale</h1>
+  <h1>Editing transaction</h1>
 
-  <%= form_with(url: sales_path) do |form| %>
+  <%= form_with(url: sale_path(@transaction), method: :patch) do |form| %>
     <%= render "sales/form", transaction: @transaction, form: form %>
   <% end %>
 
   <br>
 
   <div>
+    <%= link_to "Show this transaction", @transaction %> |
     <%= link_to "Back to transactions", transactions_path %>
   </div>
 <% end %>

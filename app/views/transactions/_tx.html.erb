@@ -1,6 +1,6 @@
 <%= turbo_frame_tag tx do %>
   <div>
-    <%= "#{tx.amount.round} #{tx.token.abbr}"%>
+    <%= "#{tx.amount.round} #{tx.token.abbr}" %>
     <%= "#{tx.token.abbr}/#{coin}: #{tx.rate}" unless tx.rate.zero? %>
   </div>
 <% end %>

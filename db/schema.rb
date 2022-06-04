@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_08_185258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "exchanges", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_exchanges_on_name", unique: true
+  end
+
   create_table "historic_rates", force: :cascade do |t|
     t.bigint "token_id", null: false
     t.datetime "date", precision: nil
@@ -64,16 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
     t.datetime "updated_at", null: false
     t.index ["token_id", "date"], name: "index_historic_rates_on_token_id_and_date", unique: true
     t.index ["token_id"], name: "index_historic_rates_on_token_id"
-  end
-
-  create_table "on_chain_tokens", force: :cascade do |t|
-    t.string "name"
-    t.bigint "token_id", null: false
-    t.bigint "chain_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chain_id"], name: "index_on_chain_tokens_on_chain_id"
-    t.index ["token_id"], name: "index_on_chain_tokens_on_token_id"
   end
 
   create_table "portfolios", force: :cascade do |t|
@@ -99,7 +96,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
     t.datetime "updated_at", null: false
     t.bigint "in_id"
     t.bigint "out_id"
+    t.bigint "location_id", null: false
+    t.string "location_type", null: false
     t.index ["in_id"], name: "index_transaction_data_on_in_id"
+    t.index ["location_type", "location_id"], name: "index_transaction_data_on_location_type_and_location_id"
     t.index ["out_id"], name: "index_transaction_data_on_out_id"
     t.index ["token_id"], name: "index_transaction_data_on_token_id"
   end
@@ -115,8 +115,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_095708) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "historic_rates", "tokens"
-  add_foreign_key "on_chain_tokens", "chains"
-  add_foreign_key "on_chain_tokens", "tokens"
   add_foreign_key "tokens", "chains", column: "native_chain_id"
   add_foreign_key "transaction_data", "tokens"
   add_foreign_key "transaction_data", "transactions", column: "in_id"

@@ -1,40 +1,23 @@
-<%= form_with(url: purchases_path) do |form| %>
-  <% if transaction.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+<% if transaction.errors.any? %>
+  <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
-      <ul>
-        <% transaction.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <%= form.fields_for :tx_in, @transaction.tx_in do |tx_in_form| %>
-    <div class="my-5">
-      <%= tx_in_form.label :token_id, class: "block font-medium mb-1" %>
-      <%= tx_in_form.collection_select :token_id, Token.all, :id, :abbr, { }, { class: "form-select bg-dark" } %>
-    </div>
-
-    <div class="my-5">
-      <%= tx_in_form.label :amount, class: "block font-medium mb-1" %>
-      <%= tx_in_form.text_field :amount, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-    </div>
-
-    <div class="my-5">
-      <%= tx_in_form.label :rate, class: "block font-medium mb-1" %>
-      <%= tx_in_form.text_field :rate, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-    </div>
-  <% end %>
-
-  <div class="mt-5">
-    <%= form.label :date, class: "block font-medium mb-1" %>
-    <%= form.date_field :date, value: Date.today %>
-  </div>
-
-  <div class="mt-5">
-    <%= form.submit "Save", class: "btn-primary" %>
-    <%= link_to "Cancel", transactions_path, class: "btn-primary" %>
+    <ul>
+      <% transaction.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
+
+<%= render "transaction_data/tx_in_form", form: form, transaction: transaction %>
+
+<div class="mt-5">
+  <%= form.label :date, class: "block font-medium mb-1" %>
+  <%= form.date_field :date, value: Date.today %>
+</div>
+
+<div class="mt-5">
+  <%= form.submit "Save", class: "btn-primary" %>
+  <%= link_to "Cancel", transactions_path, class: "btn-primary" %>
+</div>

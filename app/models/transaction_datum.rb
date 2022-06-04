@@ -2,13 +2,15 @@
 
 class TransactionDatum < ApplicationRecord
   belongs_to :token
+  belongs_to :location, polymorphic: true
+
   belongs_to :in, class_name: 'Transaction', optional: true, inverse_of: :tx_in
   belongs_to :out, class_name: 'Transaction', optional: true, inverse_of: :tx_out
 
   validates :amount, presence: true
   validates :rate, presence: true
 
-  before_create :make_amount_negative
+  before_save :make_amount_negative
 
   def total
     amount * rate

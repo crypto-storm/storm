@@ -1,11 +1,11 @@
-<h1>New transaction</h1>
+<%= render "shared/modal" do %>
+  <h1>New transaction</h1>
 
-<%= turbo_frame_tag @transaction do %>
-  <%= render "form", transaction: @transaction %>
+  <%= render "transactions/form", transaction: @transaction %>
+
+  <br>
+
+  <div>
+    <%= link_to "Back to transactions", transactions_path %>
+  </div>
 <% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to transactions", transactions_path %>
-</div>

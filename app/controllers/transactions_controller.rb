@@ -21,7 +21,7 @@ class TransactionsController < ApplicationController
     @transaction.build_tx_out(tx_out_params)
 
     respond_to do |format|
-      if @transaction.save
+      if @transaction.save!
         format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -30,10 +30,12 @@ class TransactionsController < ApplicationController
   end
 
   def update
+    @transaction.tx_in.update(tx_in_params)
+    @transaction.tx_out.update(tx_out_params)
+
     respond_to do |format|
-      @transaction.build_tx_in(tx_in_params)
-      @transaction.build_tx_out(tx_out_params)
-      if @transaction.save
+      if @transaction.valid?
+        format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: 'Transaction was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,10 +62,12 @@ class TransactionsController < ApplicationController
   end
 
   def tx_in_params
-    params.require(:transaction).require(:tx_in).permit(:token_id, :amount)
+    permitted = params.require(:transaction).require(:tx_in).permit(:token_id, :amount, :location)
+    adjust_location(permitted)
   end
 
   def tx_out_params
-    params.require(:transaction).require(:tx_out).permit(:token_id, :amount)
+    permitted = params.require(:transaction).require(:tx_out).permit(:token_id, :amount, :location)
+    adjust_location(permitted)
   end
 end

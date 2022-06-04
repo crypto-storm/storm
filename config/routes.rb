@@ -5,13 +5,12 @@ Rails.application.routes.draw do
   require 'sidekiq-scheduler/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
-  resources :on_chain_tokens
   resources :tokens
   resources :chains
 
   resources :transactions
-  resources :purchases, only: %i[new create]
-  resources :sales, only: %i[new create]
+  resources :purchases, only: %i[new create edit update]
+  resources :sales, only: %i[new create edit update]
 
   resources :overview, only: %i[index]
   resources :charts, only: %i[create]

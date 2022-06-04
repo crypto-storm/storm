@@ -11,7 +11,7 @@
     </div>
 
     <div class="flex">
-      <%= link_to edit_transaction_path(transaction), class: "mr-1" do %>
+      <%= link_to edit_transaction_path_helper(transaction), class: "mr-1", data: { turbo_frame: "modal" } do %>
         <%= fa_icon 'pencil' %>
       <% end %>
 

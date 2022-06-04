@@ -4,8 +4,11 @@ require 'test_helper'
 
 class TransactionsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @location = chains(:one)
     @tx_in = transaction_data(:one)
+    @tx_in.location = @location
     @tx_out = transaction_data(:two)
+    @tx_out.location = @location
     @transaction = transactions(:one)
     @transaction.tx_in = @tx_in
     @transaction.tx_out = @tx_out

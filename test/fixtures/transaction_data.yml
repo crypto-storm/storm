@@ -4,8 +4,12 @@ one:
   token: one
   amount: 1.5
   rate: 1.5
+  location_id: 1
+  location_type: Chain
 
 two:
   token: two
   amount: 1.5
   rate: 1.5
+  location_id: 1
+  location_type: Chain

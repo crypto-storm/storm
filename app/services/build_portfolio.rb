@@ -15,7 +15,7 @@ class BuildPortfolio < ApplicationService
 
   def inject_prices(assets = @assets, date = nil)
     assets.map do |asset, amount|
-      rates = Token.find(asset).historic_rates.with_rate
+      rates = Token.find(asset).historic_rates.with_rate.order(date: :asc)
       rate = date.nil? ? rates&.last&.rate : rates.find_by(date:)&.rate
       if rate
         total = rate * amount

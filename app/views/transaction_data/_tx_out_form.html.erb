@@ -1,0 +1,24 @@
+  <%= form.fields_for :tx_out, transaction.tx_out do |tx_out_form| %>
+    <div class="my-5">
+      <%= tx_out_form.label :token_id, class: "block font-medium mb-1" %>
+      <%= tx_out_form.collection_select :token_id, Token.all, :id, :abbr, { }, { class: "form-select bg-dark" } %>
+    </div>
+
+    <div class="my-5">
+      <%= tx_out_form.label :amount, class: "block font-medium mb-1" %>
+      <%= tx_out_form.text_field :amount, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <% unless controller_name == "transactions" %>
+      <div class="my-5">
+        <%= tx_out_form.label :rate, class: "block font-medium mb-1" %>
+        <%= tx_out_form.text_field :rate, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+    <% end %>
+
+    <div class="my-5">
+      <%= tx_out_form.label :location, class: "block font-medium mb-1" %>
+      <%= tx_out_form.collection_select :location, all_locations, :id_with_type, :name, { selected: transaction&.tx_out&.location&.id_with_type }, { class: "form-select bg-dark" } %>
+    </div>
+  <% end %>
+
