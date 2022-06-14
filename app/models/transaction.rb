@@ -9,6 +9,7 @@ class Transaction < ApplicationRecord
   validate :enough_liquidity
 
   before_create :set_rates
+  after_commit :reset_views
 
   scope :in_interval, ->(first, last) { where(date: first..last) }
 
@@ -50,6 +51,10 @@ class Transaction < ApplicationRecord
   end
 
   private
+
+  def reset_views
+    RebuildPortfolioViewsJob.perform_later
+  end
 
   def enough_liquidity
     return if purchase?

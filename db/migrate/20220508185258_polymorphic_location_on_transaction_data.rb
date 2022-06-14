@@ -2,7 +2,7 @@
 
 class PolymorphicLocationOnTransactionData < ActiveRecord::Migration[7.0]
   def change
-    change_table :transaction_date, bulk: true do |t|
+    change_table :transaction_data, bulk: true do |t|
       t.bigint :location_id, null: false
       t.string :location_type, null: false
     end

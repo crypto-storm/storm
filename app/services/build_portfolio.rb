@@ -2,49 +2,22 @@
 
 class BuildPortfolio < ApplicationService
   def initialize(portfolio)
-    @transactions = portfolio.transactions
+    @portfolio = portfolio
   end
 
   def call
-    @assets = build_assets
-    @assets = inject_prices
-    @assets
+    build_portfolio
   end
 
   private
 
-  def inject_prices(assets = @assets, date = nil)
-    assets.map do |asset, amount|
-      rates = Token.find(asset).historic_rates.with_rate.order(date: :asc)
-      rate = date.nil? ? rates&.last&.rate : rates.find_by(date:)&.rate
-      if rate
-        total = rate * amount
-        [asset, OpenStruct.new(amount:, rate:, total:)]
-      else
-        [asset, OpenStruct.new(amount:, rate: nil, total: nil)]
-      end
+  def build_portfolio
+    ActivePortfolios.where(portfolio_id: @portfolio.id).map do |data|
+      id = data['id']
+      rate = data['rate'] || 0
+      amount = data['amount'] || 0
+      total = rate * amount
+      [id, OpenStruct.new(rate:, total:, amount:)]
     end.to_h
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def build_assets(transactions = @transactions)
-    assets = Hash.new(0)
-
-    transactions.each do |transaction|
-      tx_in = transaction.tx_in
-      tx_out = transaction.tx_out
-
-      if transaction.purchase?
-        assets[tx_in.token.id] += tx_in.amount
-      elsif transaction.sale?
-        assets[tx_out.token.id] += tx_out.amount
-      elsif transaction.trade?
-        assets[tx_in.token.id] += tx_in.amount
-        assets[tx_out.token.id] += tx_out.amount
-      end
-    end
-
-    assets
-  end
-  # rubocop:enable Metrics/AbcSize
 end

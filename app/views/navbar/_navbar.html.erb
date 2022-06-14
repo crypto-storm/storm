@@ -17,7 +17,7 @@
       <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-4">
-            <%= link_to "Overview", overview_index_path, class: controller_name == "overview" ? "selected-option" : "option", data: { turbo: false } %>
+            <%= link_to "Overview", overview_index_path, class: controller_name == "overview" ? "selected-option" : "option" %>
             <%= link_to "Transactions", transactions_path, class: controller_name == "transactions" ? "selected-option" : "option" %>
             <%= link_to "Tokens", tokens_path, class: controller_name == "tokens" ? "selected-option" : "option" %>
             <%= link_to "Chains", chains_path, class: controller_name == "chains" ? "selected-option" : "option" %>

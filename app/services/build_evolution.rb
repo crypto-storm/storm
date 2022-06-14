@@ -10,31 +10,14 @@ class BuildEvolution < ApplicationService
     build_evolutions
   end
 
-  private
-
-  def portfolio_value_for_date(date)
-    query = <<-SQL
-      SELECT tk.abbr, (SUM(td.amount) * hr.rate) AS value
-      FROM transactions t
-      JOIN transaction_data td ON td.in_id = t.id OR td.out_id = t.id
-      JOIN tokens tk ON tk.id = td.token_id
-      JOIN historic_rates hr ON hr.token_id = tk.id AND hr.date = '#{date}'
-      WHERE t.date <= '#{date}'
-      AND t.portfolio_id = '#{@portfolio.id}'
-      GROUP BY tk.abbr, hr.rate
-    SQL
-
-    sanitized_query = ActiveRecord::Base.sanitize_sql(query)
-    ActiveRecord::Base.connection.execute(sanitized_query)
+  def portfolio_value_for_all_dates
+    PortfolioEvolutions.all
   end
 
   def build_yearly_history
-    today = Time.zone.today
-    year_ago = today - 1.year
-
-    history = (year_ago..today).index_with do |date|
-      portfolio_value_for_date(date).sum { |x| x['value'] || 0 }
-    end
+    history = portfolio_value_for_all_dates.map do |entry|
+      [entry['date'].to_date, entry['total']]
+    end.to_h
 
     history.reject { |_date, value| value.zero? }
   end

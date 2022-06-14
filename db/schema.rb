@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_08_185258) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_002539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,4 +119,51 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_08_185258) do
   add_foreign_key "transaction_data", "tokens"
   add_foreign_key "transaction_data", "transactions", column: "in_id"
   add_foreign_key "transaction_data", "transactions", column: "out_id"
+
+  create_view "active_portfolios", materialized: true, sql_definition: <<-SQL
+      SELECT p.id AS portfolio_id,
+      t.id,
+      t.name AS token_name,
+      ( SELECT hr.rate
+             FROM historic_rates hr
+            WHERE (hr.token_id = t.id)
+            ORDER BY hr.date DESC
+           LIMIT 1) AS rate,
+      sum(td.amount) AS amount
+     FROM (((portfolios p
+       JOIN transactions txs ON ((txs.portfolio_id = p.id)))
+       JOIN transaction_data td ON (((td.in_id = txs.id) OR (td.out_id = txs.id))))
+       JOIN tokens t ON ((td.token_id = t.id)))
+    GROUP BY p.id, t.id, t.name;
+  SQL
+  create_view "portfolio_evolutions", materialized: true, sql_definition: <<-SQL
+      SELECT tmp.portfolio_id,
+      tmp.date,
+      date_part('year'::text, tmp.date) AS year,
+      date_part('month'::text, tmp.date) AS month,
+      date_part('day'::text, tmp.date) AS day,
+      date_part('hour'::text, tmp.date) AS hour,
+      date_part('minute'::text, tmp.date) AS minute,
+      date_part('second'::text, tmp.date) AS second,
+      sum(tmp.total) AS total
+     FROM ( SELECT p.id AS portfolio_id,
+              hr.date,
+              hr.rate,
+              tk.id,
+              tk.abbr,
+              ( SELECT (sum(td_1.amount) * hr.rate)
+                     FROM (transactions t_1
+                       JOIN transaction_data td_1 ON ((((td_1.in_id = t_1.id) OR (td_1.out_id = t_1.id)) AND (td_1.token_id = tk.id))))
+                    WHERE ((t_1.date < hr.date) AND (t_1.portfolio_id = p.id))) AS total
+             FROM ((((portfolios p
+               JOIN transactions t ON ((t.portfolio_id = p.id)))
+               JOIN transaction_data td ON (((td.in_id = t.id) OR (td.out_id = t.id))))
+               JOIN tokens tk ON ((td.token_id = tk.id)))
+               JOIN historic_rates hr ON ((hr.token_id = tk.id)))
+            GROUP BY p.id, tk.id, tk.abbr, hr.date, hr.rate
+            ORDER BY hr.date) tmp
+    WHERE ((date_part('hour'::text, tmp.date) = (0)::double precision) AND (date_part('minute'::text, tmp.date) = (0)::double precision) AND (date_part('second'::text, tmp.date) = (0)::double precision) AND (tmp.total IS NOT NULL) AND (tmp.total <> (0)::double precision))
+    GROUP BY tmp.portfolio_id, tmp.date, (date_part('year'::text, tmp.date)), (date_part('month'::text, tmp.date)), (date_part('day'::text, tmp.date)), (date_part('hour'::text, tmp.date)), (date_part('minute'::text, tmp.date)), (date_part('second'::text, tmp.date))
+    ORDER BY (date_part('year'::text, tmp.date)), (date_part('month'::text, tmp.date)), (date_part('day'::text, tmp.date)), (date_part('hour'::text, tmp.date)), (date_part('minute'::text, tmp.date));
+  SQL
 end

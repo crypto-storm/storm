@@ -9,5 +9,8 @@ class SyncTokenPricesJob < ApplicationJob
       current_price = MarketOracle.current_price(token:)
       HistoricRate.create(token:, date: now, rate: current_price)
     end
+
+    ActivePortfolios.refresh
+    PortfolioEvolutions.refresh
   end
 end
