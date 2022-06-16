@@ -1,16 +1,16 @@
 <div class="flex" data-controller="sidebar">
-  <div class="hidden absolute mt-5" data-sidebar-target="arrow">
-    <%= image_tag "Green_Arrow_Right.svg", height: 36, width: 36, data: { action: "click->sidebar#toggle" } %>
+  <div class="absolute mt-5" data-sidebar-target="arrow">
+    <%= fa_icon 'circle-arrow-right', class: "mt-3 ml-5 cursor-pointer", data: { action: "click->sidebar#toggle" } %>
   </div>
   <div class="flex">
-    <div class="flex flex-col w-64 px-4 py-8 overflow-y-auto border-r" data-sidebar-target="sidebar">
+    <div class="hidden flex flex-col w-64 px-4 py-8 overflow-y-auto border-r" data-sidebar-target="sidebar">
       <div class="flex justify-between">
         <div></div>
         <h2 class="text-3xl font-semibold text-center text-blue-800">Portfolios</h2>
         <%= link_to new_portfolio_path, data: { turbo_frame: "modal" } do %>
-          <%= fa_icon 'circle-xmark' %>
+          <%= fa_icon 'circle-plus', class: "mt-3" %>
         <% end %>
-        <%= image_tag "Green_Arrow_Left.svg", height: 24, width: 24, data: { action: "click->sidebar#toggle" } %>
+        <%= fa_icon 'circle-arrow-left', class: "mt-3 cursor-pointer", data: { action: "click->sidebar#toggle" } %>
       </div>
       <div class="flex flex-col justify-between mt-6">
         <aside>

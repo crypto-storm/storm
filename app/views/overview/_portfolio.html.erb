@@ -1,36 +1,28 @@
-<div class="table w-full border">
-  <div class="table-header-group border">
-    <div class="table-row border">
-      <div class="table-cell text-center border">Token</div>
-      <div class="table-cell text-center border">Amount</div>
-      <div class="table-cell text-center border">Total</div>
-      <div class="table-cell text-center border">Price</div>
-    </div>
-  </div>
-  <div class="table-row-group border">
-    <% assets.each do |token_id, data| %>
-      <% token = Token.find(token_id) %>
-      <div class="table-row border">
-        <div class="table-cell text-center border">
-          <div class="flex justify-between py-5">
-            <div></div>
-            <div class="flex">
-              <%= image_tag(token.logo, width: 24, height: 24, class: "rounded mr-3 object-contain") if token.logo.attached? %>
-              <%= token.abbr %>
-            </div>
-            <div></div>
-          </div>
+<div class="grid grid-cols-4 mt-10 border border-black">
+  <span class="grid-cell">Token</span>
+  <span class="grid-cell">Amount</span>
+  <span class="grid-cell">Total</span>
+  <span class="grid-cell">Price</span>
+  <% assets.each do |token_id, data| %>
+    <% token = Token.find(token_id) %>
+    <div class="grid-cell p-4">
+      <div class="flex justify-between">
+        <div></div>
+        <div class="flex">
+          <%= image_tag(token.logo, width: 24, height: 24, class: "rounded mr-3 object-contain") if token.logo.attached? %>
+          <%= token.abbr %>
         </div>
-        <div class="table-cell text-center border">
-          <%= round_if_bigger_than_one(data.amount) %>
-        </div>
-        <div class="table-cell text-center border">
-          <%= "#{round_if_bigger_than_one(data.total)}$" %>
-        </div>
-        <div class="table-cell text-center border">
-          <%= round_if_bigger_than_one(data.rate) %>
-        </div>
+        <div></div>
       </div>
-    <% end %>
-  </div>
+    </div>
+    <div class="grid-cell p-4">
+      <%= format_amount(data.amount) %>
+    </div>
+    <div class="grid-cell p-4">
+      <%= "#{format_amount(data.total)}$" %>
+    </div>
+    <div class="grid-cell p-4">
+      <%= "#{format_rate(data.rate)}$" %>
+    </div>
+  <% end %>
 </div>

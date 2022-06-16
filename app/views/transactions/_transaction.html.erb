@@ -1,23 +1,36 @@
 <%= turbo_frame_tag transaction do %>
-  <div class="flex items-center">
-    <div class="mr-1">
-      <% if transaction.trade? %>
-        <%= render partial: "transactions/trade", locals: { trade: transaction } %>
-      <% elsif transaction.purchase? %>
-        <%= render partial: "purchases/purchase", locals: { purchase: transaction.tx_in, coin: 'USD' } %>
-      <% else %>
-        <%= render partial: "sales/sale", locals: { sale: transaction.tx_out, coin: 'USD' } %>
-      <% end %>
+  <div class="grid grid-cols-8">
+    <div class="grid-cell <%= transaction.trade? ? "row-span-2 p-10" : "p-4" %>">
+      <span><%= transaction.type.to_s.humanize %></span>
     </div>
 
-    <div class="flex">
-      <%= link_to edit_transaction_path_helper(transaction), class: "mr-1", data: { turbo_frame: "modal" } do %>
-        <%= fa_icon 'pencil' %>
-      <% end %>
+    <%= render 'transactions/tx', transaction: transaction, type: :purchase, tx: transaction.tx_in unless transaction.sale? %>
+    <%= render 'transactions/tx', transaction: transaction, type: :sale, tx: transaction.tx_out if transaction.sale? %>
 
-      <%= button_to transaction_path(transaction), method: :delete, data: { turbo_frame: "_top" } do %>
-        <%= fa_icon 'circle-xmark' %>
-      <% end %>
+    <div class="grid-cell p-4">
+      <%= transaction.date.to_date %>
     </div>
+
+    <div data-controller="action-confirmation" class="flex justify-between grid-cell <%= transaction.trade? ? "row-span-2 p-10" : "p-4" %>">
+      <div></div>
+      <div class="flex">
+        <%= link_to edit_transaction_path_helper(transaction), data: { turbo_frame: "modal" } do %>
+          <%= fa_icon 'pencil' %>
+        <% end %>
+
+        <%= button_to transaction_path(transaction), method: :delete, data: { action: "click->action-confirmation#confirm" }, class: "mx-2" do %>
+          <%= fa_icon 'circle-xmark' %>
+        <% end %>
+      </div>
+      <div></div>
+    </div>
+
+    <% if transaction.trade? %>
+      <%= render 'transactions/tx', transaction: transaction, type: :sale, tx: transaction.tx_out %>
+
+      <div class="grid-cell p-4">
+        <%= transaction.date.to_date %>
+      </div>
+    <% end %>
   </div>
 <% end %>

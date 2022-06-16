@@ -1,13 +1,18 @@
 <%= turbo_frame_tag chain do %>
-  <div class="flex">
-    <div class="flex items-center mr-1">
-      <%= image_tag(chain.logo, width: 24, height: 24, class: "rounded mr-1 object-contain") if chain.logo.attached? %>
-      <%= chain.name %>
+  <div class="card-dark">
+    <div class="ml-4">
+      <%= image_tag(chain.logo, width: 24, height: 24, class: "rounded object-contain") if chain.logo.attached? %>
     </div>
 
-    <div class="flex">
-      <%= link_to edit_chain_path(chain), class: "mr-1" do %>
+    <div><%= chain.name %></div>
+
+    <div data-controller="action-confirmation" class="flex justify-between">
+      <%= link_to edit_chain_path(chain), data: { turbo_frame: "modal" }, class: "pr-2 mr-2" do %>
         <%= fa_icon 'pencil' %>
+      <% end %>
+
+      <%= button_to chain_path(chain), method: :delete, data: { action: "click->action-confirmation#confirm" }, class: "pr-2 mr-2" do %>
+        <%= fa_icon 'circle-xmark' %>
       <% end %>
     </div>
   </div>

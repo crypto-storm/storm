@@ -7,10 +7,12 @@ class SalesController < ApplicationController
     @transaction = Transaction.new
   end
 
-  def edit; end
+  def edit
+    @transaction.tx_out.amount = @transaction.tx_out.amount.abs
+  end
 
   def create
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new(transaction_params.merge({ portfolio: @portfolio }))
     @transaction.build_tx_out(tx_out_params)
 
     respond_to do |format|

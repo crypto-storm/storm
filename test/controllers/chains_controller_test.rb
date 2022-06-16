@@ -19,15 +19,10 @@ class ChainsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create chain' do
     assert_difference('Chain.count') do
-      post chains_url, params: { chain: { name: @chain.name } }
+      post chains_url, params: { chain: { name: 'chain_name' } }
     end
 
     assert_redirected_to chain_url(Chain.last)
-  end
-
-  test 'should show chain' do
-    get chain_url(@chain)
-    assert_response :success
   end
 
   test 'should get edit' do

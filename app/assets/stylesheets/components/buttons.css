@@ -5,3 +5,7 @@
 .pill-btn {
   @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full;
 }
+
+.modal-btn {
+  @apply hover:bg-gradient-to-b focus:bg-gradient-to-b active:bg-gradient-to-b  disabled:pointer-events-none disabled:opacity-40 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded px-4 h-[52px] w-full font-bold flex items-center justify-center gap-1 rounded-2xl md:rounded !border-none text-white rounded-full;
+}

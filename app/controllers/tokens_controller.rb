@@ -4,7 +4,7 @@ class TokensController < ApplicationController
   before_action :set_token, only: %i[show edit update destroy]
 
   def index
-    @tokens = Token.all
+    @tokens = Token.includes(logo_attachment: :blob).order(:created_at)
   end
 
   def show; end
@@ -31,6 +31,7 @@ class TokensController < ApplicationController
   def update
     respond_to do |format|
       if @token.update(token_params)
+        format.turbo_stream
         format.html { redirect_to token_url(@token), notice: 'Token was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -42,6 +43,7 @@ class TokensController < ApplicationController
     @token.destroy
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to tokens_url, notice: 'Token was successfully destroyed.' }
     end
   end
@@ -53,6 +55,6 @@ class TokensController < ApplicationController
   end
 
   def token_params
-    params.require(:token).permit(:name, :logo)
+    params.require(:token).permit(:name, :abbr, :logo)
   end
 end

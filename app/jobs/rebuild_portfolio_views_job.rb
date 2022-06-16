@@ -4,7 +4,7 @@ class RebuildPortfolioViewsJob < ApplicationJob
   queue_as :default
 
   def perform
-    ActivePortfolios.refresh
+    PortfolioOverviews.refresh
     PortfolioEvolutions.refresh
   end
 end

@@ -1,0 +1,7 @@
+.outer-modal {
+  @apply flex flex-col gap-3 p-2 md:p-4 pt-4 rounded-[24px] shadow-md;
+}
+
+.inner-modal {
+  @apply border rounded-[14px] p-3 mt-5;
+}

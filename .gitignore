@@ -41,4 +41,8 @@
 .byebug_history
 /docs
 routes
-builds/*
+app/assets/builds/*
+
+# semi-private stuff that isn't relevant for the public repository
+db/private_seeds.rb
+scripts/redo_transactions.rb

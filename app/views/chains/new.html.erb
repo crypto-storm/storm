@@ -1,11 +1,3 @@
-<h1>New chain</h1>
-
-<%= turbo_frame_tag @chain do %>
+<%= render "shared/modal" do %>
   <%= render "form", chain: @chain %>
 <% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to chains", chains_path %>
-</div>

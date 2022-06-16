@@ -1,3 +1,1 @@
-<%= turbo_stream.prepend "tokens", @token %>
-
-<%= turbo_stream.update dom_id(Token.new), "" %>
+<%= turbo_stream.append "tokens", @token %>

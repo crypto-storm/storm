@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_07_002539) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_16_012558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_002539) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_chains_on_name", unique: true
   end
 
   create_table "coin_gecko_tokens", force: :cascade do |t|
@@ -165,5 +166,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_002539) do
     WHERE ((date_part('hour'::text, tmp.date) = (0)::double precision) AND (date_part('minute'::text, tmp.date) = (0)::double precision) AND (date_part('second'::text, tmp.date) = (0)::double precision) AND (tmp.total IS NOT NULL) AND (tmp.total <> (0)::double precision))
     GROUP BY tmp.portfolio_id, tmp.date, (date_part('year'::text, tmp.date)), (date_part('month'::text, tmp.date)), (date_part('day'::text, tmp.date)), (date_part('hour'::text, tmp.date)), (date_part('minute'::text, tmp.date)), (date_part('second'::text, tmp.date))
     ORDER BY (date_part('year'::text, tmp.date)), (date_part('month'::text, tmp.date)), (date_part('day'::text, tmp.date)), (date_part('hour'::text, tmp.date)), (date_part('minute'::text, tmp.date));
+  SQL
+  create_view "portfolio_overviews", materialized: true, sql_definition: <<-SQL
+      SELECT p.id AS portfolio_id,
+      t.id,
+      t.name AS token_name,
+      ( SELECT hr.rate
+             FROM historic_rates hr
+            WHERE (hr.token_id = t.id)
+            ORDER BY hr.date DESC
+           LIMIT 1) AS rate,
+      sum(td.amount) AS amount
+     FROM (((portfolios p
+       JOIN transactions txs ON ((txs.portfolio_id = p.id)))
+       JOIN transaction_data td ON (((td.in_id = txs.id) OR (td.out_id = txs.id))))
+       JOIN tokens t ON ((td.token_id = t.id)))
+    GROUP BY p.id, t.id, t.name;
   SQL
 end

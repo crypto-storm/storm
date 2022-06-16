@@ -38,11 +38,6 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     # assert_redirected_to transaction_url(Transaction.last)
   end
 
-  test 'should show transaction' do
-    get transaction_url(@transaction)
-    assert_response :success
-  end
-
   test 'should get edit' do
     get edit_transaction_url(@transaction)
     assert_response :success

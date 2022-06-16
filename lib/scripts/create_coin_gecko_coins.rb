@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-file = File.read('./coin_gecko_coins.json')
+file = File.read('./lib/scripts/coin_gecko_coins.json')
 data = JSON.parse(file)
 total = data.size
 counter = 0

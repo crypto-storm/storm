@@ -1,24 +1,20 @@
-  <%= form.fields_for :tx_out, transaction.tx_out do |tx_out_form| %>
-    <div class="my-5">
-      <%= tx_out_form.label :token_id, class: "block font-medium mb-1" %>
-      <%= tx_out_form.collection_select :token_id, Token.all, :id, :abbr, { }, { class: "form-select bg-dark" } %>
+<%= form.fields_for :tx_out, transaction.tx_out do |tx_out_form| %>
+  <div class="inner-modal border-dark-700 hover:border-dark-600 bg-dark-900">
+    <div class="flex space-x-10">
+      <%= tx_out_form.collection_select :token_id, Token.all, :id, :abbr, { }, { class: "select bg-dark-800 hover:bg-dark-700" } %>
+      <%= tx_out_form.collection_select :location, all_locations, :id_with_type, :name, { selected: transaction&.tx_out&.location&.id_with_type }, { class: "select bg-dark-800 hover:bg-dark-700" } %>
     </div>
 
-    <div class="my-5">
-      <%= tx_out_form.label :amount, class: "block font-medium mb-1" %>
-      <%= tx_out_form.text_field :amount, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <div class="mt-5">
+        <%= tx_out_form.label :amount, class: "label" if transaction.sale? && action_name == "edit" %>
+      <%= tx_out_form.text_field :amount, placeholder: "Amount: 0.00", class: "field", required: true %>
     </div>
 
     <% unless controller_name == "transactions" %>
-      <div class="my-5">
-        <%= tx_out_form.label :rate, class: "block font-medium mb-1" %>
-        <%= tx_out_form.text_field :rate, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      <div class="mt-5">
+        <%= tx_out_form.label :rate, class: "label" if transaction.sale? && action_name == "edit" %>
+        <%= tx_out_form.text_field :rate, placeholder: "Price: 0.00", class: "field", required: true %>
       </div>
     <% end %>
-
-    <div class="my-5">
-      <%= tx_out_form.label :location, class: "block font-medium mb-1" %>
-      <%= tx_out_form.collection_select :location, all_locations, :id_with_type, :name, { selected: transaction&.tx_out&.location&.id_with_type }, { class: "form-select bg-dark" } %>
-    </div>
-  <% end %>
-
+  </div>
+<% end %>

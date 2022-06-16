@@ -6,7 +6,7 @@
     <% end %>
   <% end %>
   <div class="flex">
-    <%= link_to edit_portfolio_path(portfolio), class: "mr-1" do %>
+    <%= link_to edit_portfolio_path(portfolio), data: { turbo_frame: "modal" }, class: "mr-1" do %>
       <%= fa_icon 'pencil' %>
     <% end %>
     <%= button_to portfolio_path(portfolio), method: :delete, data: { turbo_frame: "_top" } do %>

@@ -1,6 +1,31 @@
-<%= turbo_frame_tag tx do %>
-  <div>
-    <%= "#{tx.amount.round} #{tx.token.abbr}" %>
-    <%= "#{tx.token.abbr}/#{coin}: #{tx.rate}" unless tx.rate.zero? %>
-  </div>
-<% end %>
+<div class="grid-cell p-4">
+  <% if type == :sale %>
+    <%= fa_icon 'circle-arrow-down' %>
+  <% else %>
+    <%= fa_icon 'circle-arrow-up'  %>
+  <% end %>
+</div>
+<div class="flex justify-between grid-cell">
+  <div></div>
+  <% if tx.token.logo.attached? %>
+    <%= image_tag(tx.token.logo, width: 24, height: 24, class: "rounded object-contain") %>
+  <% else %>
+    <span class="text-center p-4"><%= tx.token.abbr %></span>
+  <% end %>
+  <div></div>
+</div>
+<div class="grid-cell p-4">
+  <%= format_amount(tx.amount.abs) %>
+</div>
+<div class="grid-cell p-4">
+  <%= format_rate_transaction(tx.rate, transaction, type) %>
+</div>
+<div class="flex justify-between grid-cell">
+  <div></div>
+  <% if tx.location.logo.attached? %>
+    <%= image_tag(tx.location.logo, width: 24, height: 24, class: "rounded object-contain") %>
+  <% else %>
+    <span class="text-center p-4"><%= tx.location.name %></span>
+  <% end %>
+  <div></div>
+</div>

@@ -26,7 +26,8 @@ class PortfoliosController < ApplicationController
   def update
     respond_to do |format|
       if @portfolio.update(portfolio_params)
-        format.html { redirect_to portfolio_url(@portfolio), notice: 'Token was successfully updated.' }
+        format.turbo_stream
+        format.html { redirect_to portfolio_url(@portfolio), notice: 'Portfolio was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

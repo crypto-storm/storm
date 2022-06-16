@@ -11,13 +11,17 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :name, class: "block font-medium mb-1" %>
-    <%= form.text_field :name %>
-  </div>
+  <div class="flex justify-between">
+    <div></div>
+    <div class="outer-modal bg-dark-800 shadow-dark-1000">
+      <div class="inner-modal border-dark-700 hover:border-dark-600 bg-dark-900">
+        <%= form.text_field :name, placeholder: "Name", class: "field", required: true %>
+      </div>
 
-  <div class="inline">
-    <%= form.submit "Save", class: "btn-primary", data: { action: "submit->modal#close" } %>
-    <%= link_to "Cancel", portfolio_path(portfolio), class: "btn-primary" if portfolio.persisted? %>
+      <div class="mt-5">
+        <%= form.submit "Save", data: { action: "submit->modal#close" }, class: "modal-btn" %>
+      </div>
+    </div>
+    <div></div>
   </div>
 <% end %>

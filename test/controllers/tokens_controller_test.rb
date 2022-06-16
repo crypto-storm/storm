@@ -25,11 +25,6 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to token_url(Token.last)
   end
 
-  test 'should show token' do
-    get token_url(@token)
-    assert_response :success
-  end
-
   test 'should get edit' do
     get edit_token_url(@token)
     assert_response :success

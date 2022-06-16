@@ -4,7 +4,10 @@ class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show edit update destroy]
 
   def index
-    @transactions = Transaction.order(date: :desc, created_at: :desc).all
+    tx_preloads = { location: [logo_attachment: :blob], token: [logo_attachment: :blob] }
+    @transactions = Transaction.includes(tx_in: tx_preloads, tx_out: tx_preloads)
+                               .where(portfolio: @portfolio)
+                               .order(date: :desc, created_at: :desc)
   end
 
   def show; end
@@ -13,10 +16,12 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
-  def edit; end
+  def edit
+    @transaction.tx_out.amount = @transaction.tx_out.amount.abs
+  end
 
   def create
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new(transaction_params.merge({ portfolio: @portfolio }))
     @transaction.build_tx_in(tx_in_params)
     @transaction.build_tx_out(tx_out_params)
 
@@ -47,6 +52,7 @@ class TransactionsController < ApplicationController
     @transaction.destroy
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
     end
   end

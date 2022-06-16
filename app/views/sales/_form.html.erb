@@ -10,14 +10,22 @@
   </div>
 <% end %>
 
-<%= render "transaction_data/tx_out_form", form: form, transaction: transaction %>
+<div class="flex justify-between">
+  <div></div>
+  <div class="outer-modal bg-dark-800 shadow-dark-1000">
+    <%= render "transaction_data/tx_out_form", form: form, transaction: transaction %>
 
-<div class="mt-5">
-  <%= form.label :date, class: "block font-medium mb-1" %>
-  <%= form.date_field :date, value: Date.today %>
-</div>
+    <div class="flex justify-between">
+      <div></div>
+      <div class="mt-5">
+        <%= form.date_field :date, value: Date.today, class: "date bg-dark-900 hover:bg-dark-700" %>
+      </div>
+      <div></div>
+    </div>
 
-<div class="mt-5">
-  <%= form.submit "Save", class: "btn-primary" %>
-  <%= link_to "Cancel", transactions_path, class: "btn-primary" %>
+    <div class="mt-5">
+      <%= form.submit "Save", class: "modal-btn" %>
+    </div>
+  </div>
+  <div></div>
 </div>

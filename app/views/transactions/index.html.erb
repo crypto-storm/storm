@@ -13,17 +13,27 @@
       </div>
     </div>
 
-    <%= turbo_frame_tag dom_id(Transaction.new) do %>
-    <% end %>
+    <% if @transactions.any? %>
+      <div class="grid mt-10 border border-black">
+        <div class="grid grid-cols-8">
+          <span class="grid-cell">Type</span>
+          <span class="grid-cell">Balance</span>
+          <span class="grid-cell">Token</span>
+          <span class="grid-cell">Amount</span>
+          <span class="grid-cell">Rate</span>
+          <span class="grid-cell">Chain/Exchange</span>
+          <span class="grid-cell">Date</span>
+          <span class="grid-cell">Actions</span>
+        </div>
 
-    <%= turbo_frame_tag "transactions" do %>
-      <div id="transactions" class="min-w-full">
-        <% @transactions.each do |transaction| %>
-          <div class="mt-5">
-            <%= render transaction %>
-          </div>
+        <%= turbo_frame_tag "transactions" do %>
+          <% @transactions.each do |transaction| %>
+            <%= render 'transactions/transaction', transaction: transaction %>
+          <% end %>
+        </div>
         <% end %>
       </div>
+    <% else %>
+      <h1 class="mt-10 font-bold text-2xl text-center">Add transactions to see them here!</h1>
     <% end %>
-  </div>
 </div>

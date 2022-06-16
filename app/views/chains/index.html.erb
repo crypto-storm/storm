@@ -6,20 +6,16 @@
   <div>
     <div class="flex justify-between items-center">
       <h1 class="font-bold text-4xl">Chains</h1>
-      <%= link_to "Add chain", new_chain_path, class: "btn-primary", data: { turbo_frame: dom_id(Chain.new) } %>
+      <%= link_to "Add chain", new_chain_path, class: "btn-primary", data: { turbo_frame: "modal" } %>
     </div>
 
     <%= turbo_frame_tag dom_id(Chain.new) do %>
     <% end %>
 
-    <%= turbo_frame_tag "chains" do %>
-      <div class="min-w-full">
-        <% @chains.each do |chain| %>
-          <div class="mt-5">
-            <%= render chain %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <div id="chains" class="grid grid-cols-4 gap-x-4 gap-y-4 mt-10">
+      <% @chains.each do |chain| %>
+        <%= render chain %>
+      <% end %>
+    </div>
   </div>
 </div>

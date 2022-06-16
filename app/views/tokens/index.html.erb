@@ -6,20 +6,13 @@
   <div>
     <div class="flex justify-between items-center">
       <h1 class="font-bold text-4xl">Tokens</h1>
-      <%= link_to "Add token", new_token_path, class: "btn-primary", data: { turbo_frame: dom_id(Token.new) } %>
+      <%= link_to "Add token", new_token_path, class: "btn-primary", data: { turbo_frame: "modal" } %>
     </div>
 
-      <%= turbo_frame_tag dom_id(Token.new) do %>
+    <div id="tokens" class="grid grid-cols-4 gap-x-4 gap-y-4 mt-10">
+      <% @tokens.each do |token| %>
+        <%= render token %>
       <% end %>
-
-      <%= turbo_frame_tag "tokens" do %>
-        <div class="min-w-full">
-          <% @tokens.each do |token| %>
-            <div class="mt-10">
-              <%= render token %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+    </div>
   </div>
 </div>

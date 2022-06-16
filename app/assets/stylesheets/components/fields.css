@@ -1,0 +1,15 @@
+.field {
+  @apply relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis leading-[36px] flex-grow w-full text-left bg-transparent disabled:cursor-not-allowed text-white;
+}
+
+.label {
+  @apply font-bold text-white text-left;
+}
+
+.select {
+  @apply cursor-pointer flex items-center gap-2 px-2 py-1 rounded-full shadow-md text-sm leading-5 font-bold text-white;
+}
+
+.date {
+  @apply cursor-pointer flex items-center gap-2 px-2 py-1 rounded-full shadow-md text-sm leading-5 font-bold text-white;
+}

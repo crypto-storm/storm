@@ -12,4 +12,3 @@ export default class ExtendedModal extends Modal {
     }
   }
 }
-

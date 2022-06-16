@@ -7,5 +7,7 @@ class Chain < ApplicationRecord
   has_one :native_token, class_name: 'Token', foreign_key: 'native_chain_id', dependent: :destroy,
                          inverse_of: :native_chain
 
+  validates :name, presence: true, uniqueness: true
+
   has_many :transaction_data, as: :location, dependent: :destroy
 end

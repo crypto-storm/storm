@@ -12,7 +12,7 @@ class BuildPortfolio < ApplicationService
   private
 
   def build_portfolio
-    ActivePortfolios.where(portfolio_id: @portfolio.id).map do |data|
+    PortfolioOverviews.where(portfolio_id: @portfolio.id).map do |data|
       id = data['id']
       rate = data['rate'] || 0
       amount = data['amount'] || 0

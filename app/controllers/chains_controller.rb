@@ -4,7 +4,7 @@ class ChainsController < ApplicationController
   before_action :set_chain, only: %i[show edit update destroy]
 
   def index
-    @chains = Chain.all
+    @chains = Chain.includes(logo_attachment: :blob).order(:created_at)
   end
 
   def show; end
@@ -31,6 +31,7 @@ class ChainsController < ApplicationController
   def update
     respond_to do |format|
       if @chain.update(chain_params)
+        format.turbo_stream
         format.html { redirect_to chain_url(@chain), notice: 'Chain was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -42,6 +43,7 @@ class ChainsController < ApplicationController
     @chain.destroy
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to chains_url, notice: 'Chain was successfully destroyed.' }
     end
   end

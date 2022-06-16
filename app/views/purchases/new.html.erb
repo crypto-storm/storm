@@ -1,13 +1,5 @@
 <%= render "shared/modal" do %>
-  <h1>New purchase</h1>
-
   <%= form_with(url: purchases_path) do |form| %>
     <%= render "purchases/form", transaction: @transaction, form: form %>
   <% end %>
-
-  <br>
-
-  <div>
-    <%= link_to "Back to transactions", transactions_path %>
-  </div>
 <% end %>

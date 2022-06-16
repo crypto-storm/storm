@@ -47,37 +47,9 @@ async function builder() {
   });
 }
 
-console.log(process.argv, "argv")
-console.log(process.argv.includes("--watch"), "includes watch")
-
 if (process.argv.includes("--watch")) {
   builder()
 } else {
-  esbuild.build({
-    ...config,
-    minify: process.env.RAILS_ENV == "production",
-  }).catch(() => process.exit(1));
-}
-
-if (process.argv.includes("--reload")) {
-  buildAndReload()
-
-} else if (process.argv.includes("--watch")) {
-  // Watch uses esbuild's watch option
-  const watch = process.argv.includes("--watch") && {
-    onRebuild(error) {
-      if (error) console.error("[watch] build failed", error);
-      else console.log("[watch] build finished");
-    },
-  };
-
-  esbuild.build({
-    ...config,
-    watch: watch,
-  }).catch(() => process.exit(1));
-
-} else {
-  // Standard esbuild
   esbuild.build({
     ...config,
     minify: process.env.RAILS_ENV == "production",

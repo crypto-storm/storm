@@ -1,0 +1,3 @@
+.grid-cell {
+  @apply text-center border border-black;
+}

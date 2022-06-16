@@ -10,7 +10,7 @@ class PurchasesController < ApplicationController
   def edit; end
 
   def create
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new(transaction_params.merge({ portfolio: @portfolio }))
     @transaction.build_tx_in(tx_in_params)
 
     respond_to do |format|

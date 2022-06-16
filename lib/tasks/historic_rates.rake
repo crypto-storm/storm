@@ -28,7 +28,7 @@ namespace :historic_rate do
     end
     client = CoingeckoRuby::Client.new
     initial_date = Time.zone.today - 5.years
-    final_date = Time.zone.today
+    final_date = Time.zone.today - 1.day
     dates = (initial_date..final_date).to_a.reverse
 
     Token.find_each do |token|

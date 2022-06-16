@@ -17,4 +17,7 @@ import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 
 import ExtendedModal from "./extended_modal_controller"
-application.register('extended-modal', ExtendedModal)
+application.register("extended-modal", ExtendedModal)
+
+import ActionConfirmation from "./action_confirmation_controller"
+application.register("action-confirmation", ActionConfirmation)

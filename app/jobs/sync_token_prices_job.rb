@@ -10,7 +10,7 @@ class SyncTokenPricesJob < ApplicationJob
       HistoricRate.create(token:, date: now, rate: current_price)
     end
 
-    ActivePortfolios.refresh
+    PortfolioOverviews.refresh
     PortfolioEvolutions.refresh
   end
 end
