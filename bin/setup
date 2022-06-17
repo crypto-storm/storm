@@ -32,4 +32,9 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! 'bin/rails restart'
+
+  puts "\n== Building CoinGecko tokens =="
+  system! 'bin/rails coin_gecko:tokens'
+
+  puts "\n== Setup finished! =="
 end
