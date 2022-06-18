@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :coin_gecko do
   task tokens: :environment do
     file = File.read('./lib/scripts/coin_gecko_coins.json')
