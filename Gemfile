@@ -36,6 +36,7 @@ group :development, :test do
   gem 'bullet'
   gem 'byebug'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails'
 end
 
 group :development do
