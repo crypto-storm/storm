@@ -9,3 +9,7 @@ Read more about the project under the [official Storm GitBook](https://pcosta99.
 
 You can find building commands on the GitBook linked above. However, here's a shortcut to the [Usage](https://pcosta99.gitbook.io/storm/usage/overview) section.
 You can also find a detailed explanation of the components/design of the project under the [official Storm Development GitBook](https://pcosta99.gitbook.io/storm-software).
+
+## Contributing
+
+For the time being contributions are closed but the by the end of Phase 1 anyone will be able to help out.
