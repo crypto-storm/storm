@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :overview, only: %i[index]
   resources :charts, only: %i[create]
-  resources :portfolios, except: %i[show] do
+  resources :portfolios, except: %i[index show] do
     collection do
       put :change_active
     end

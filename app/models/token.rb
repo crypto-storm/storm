@@ -10,4 +10,12 @@ class Token < ApplicationRecord
 
   validates :name, presence: true
   validates :abbr, presence: true
+
+  def equals?(other)
+    name == other.name &&
+      abbr == other.abbr &&
+      native_chain == other.native_chain &&
+      transaction_datum_ids == other.transaction_datum_ids &&
+      historic_rate_ids == other.historic_rate_ids
+  end
 end

@@ -35,8 +35,8 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    @transaction.tx_in.update(tx_in_params)
-    @transaction.tx_out.update(tx_out_params)
+    @transaction.tx_in.update!(tx_in_params)
+    @transaction.tx_out.update!(tx_out_params)
 
     respond_to do |format|
       if @transaction.valid?

@@ -17,7 +17,7 @@ class ChainsController < ApplicationController
     @chain = Chain.new(chain_params)
 
     respond_to do |format|
-      if @chain.save
+      if @chain.save!
         format.html { redirect_to chain_url(@chain), notice: 'Chain was successfully created.' }
         format.turbo_stream
       else
@@ -28,7 +28,7 @@ class ChainsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @chain.update(chain_params)
+      if @chain.update!(chain_params)
         format.turbo_stream
         format.html { redirect_to chain_url(@chain), notice: 'Chain was successfully updated.' }
       else

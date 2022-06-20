@@ -16,7 +16,7 @@ class SalesController < ApplicationController
     @transaction.build_tx_out(tx_out_params)
 
     respond_to do |format|
-      if @transaction.save
+      if @transaction.save!
         format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -25,10 +25,10 @@ class SalesController < ApplicationController
   end
 
   def update
-    @transaction.tx_out.update(tx_out_params)
+    @transaction.tx_out.update!(tx_out_params)
 
     respond_to do |format|
-      if @transaction.save!
+      if @transaction.valid?
         format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: 'Transaction was successfully updated.' }
       else
