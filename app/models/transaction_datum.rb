@@ -16,6 +16,13 @@ class TransactionDatum < ApplicationRecord
     amount * rate
   end
 
+  def equals?(other)
+    token.equals?(other.token) &&
+      location.equals?(other.location) &&
+      amount == other.amount &&
+      rate == other.rate
+  end
+
   private
 
   def make_amount_negative

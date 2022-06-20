@@ -6,12 +6,13 @@ FactoryBot.define do
 
     trait :trade do
       transient do
-        token { nil }
-        amount { 0 }
+        token { build(:token) }
+        location { build(:chain) }
+        amount { Faker::Number.number(digits: 3) }
       end
 
-      tx_in { build(:transaction_datum, token:, amount:) }
-      tx_out { build(:transaction_datum, token:, amount:) }
+      tx_in { build(:transaction_datum, token:, location:, amount:) }
+      tx_out { build(:transaction_datum, token:, location:, amount:) }
 
       after(:create) do |trade|
         trade.tx_in.save!
@@ -21,12 +22,13 @@ FactoryBot.define do
 
     trait :purchase do
       transient do
-        token { nil }
-        amount { 0 }
-        rate { 0 }
+        token { build(:token) }
+        location { build(:chain) }
+        amount { Faker::Number.number(digits: 3) }
+        rate { Faker::Number.decimal(l_digits: 2) }
       end
 
-      tx_in { build(:transaction_datum, token:, amount:, rate:) }
+      tx_in { build(:transaction_datum, token:, location:, amount:, rate:) }
 
       after(:create) do |purchase|
         purchase.tx_in.save!
@@ -35,12 +37,13 @@ FactoryBot.define do
 
     trait :sale do
       transient do
-        token { nil }
-        amount { 0 }
-        rate { 0 }
+        token { build(:token) }
+        location { build(:chain) }
+        amount { Faker::Number.number(digits: 3) }
+        rate { Faker::Number.decimal(l_digits: 2) }
       end
 
-      tx_out { build(:transaction_datum, token:, amount:, rate:) }
+      tx_out { build(:transaction_datum, token:, location:, amount:, rate:) }
 
       after(:create) do |sale|
         sale.tx_out.save!

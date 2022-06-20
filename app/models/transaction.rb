@@ -50,6 +50,12 @@ class Transaction < ApplicationRecord
     end
   end
 
+  def equals?(other)
+    (tx_in.nil? || tx_in.equals?(other.tx_in)) &&
+      (tx_out.nil? || tx_out&.equals?(other.tx_out)) &&
+      portfolio == other.portfolio
+  end
+
   private
 
   def reset_views
