@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TokensController < ApplicationController
-  before_action :set_token, only: %i[show edit update destroy]
+  before_action :set_token, only: %i[edit update destroy]
 
   def index
     @tokens = Token.includes(logo_attachment: :blob).order(:created_at)
@@ -19,7 +19,7 @@ class TokensController < ApplicationController
     @token = Token.new(token_params)
 
     respond_to do |format|
-      if @token.save
+      if @token.save!
         format.html { redirect_to token_url(@token), notice: 'Token was successfully created.' }
         format.turbo_stream
       else
@@ -30,7 +30,7 @@ class TokensController < ApplicationController
 
   def update
     respond_to do |format|
-      if @token.update(token_params)
+      if @token.update!(token_params)
         format.turbo_stream
         format.html { redirect_to token_url(@token), notice: 'Token was successfully updated.' }
       else

@@ -7,4 +7,9 @@ class Exchange < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   has_many :transaction_data, as: :location, dependent: :destroy
+
+  def equals?(other)
+    name == other.name &&
+      transaction_datum_ids == other.transaction_datum_ids
+  end
 end

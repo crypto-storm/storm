@@ -14,7 +14,7 @@ class PurchasesController < ApplicationController
     @transaction.build_tx_in(tx_in_params)
 
     respond_to do |format|
-      if @transaction.save
+      if @transaction.save!
         format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -23,7 +23,7 @@ class PurchasesController < ApplicationController
   end
 
   def update
-    @transaction.tx_in.update(tx_in_params)
+    @transaction.tx_in.update!(tx_in_params)
 
     respond_to do |format|
       if @transaction.valid?

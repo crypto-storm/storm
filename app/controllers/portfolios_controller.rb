@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class PortfoliosController < ApplicationController
-  before_action :set_portfolio, only: %i[show edit update destroy]
-
-  def show; end
+  before_action :set_portfolio, only: %i[edit update destroy]
 
   def new
     @portfolio = Portfolio.new
@@ -15,7 +13,7 @@ class PortfoliosController < ApplicationController
     @portfolio = Portfolio.new(portfolio_params)
 
     respond_to do |format|
-      if @portfolio.save
+      if @portfolio.save!
         format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -25,7 +23,7 @@ class PortfoliosController < ApplicationController
 
   def update
     respond_to do |format|
-      if @portfolio.update(portfolio_params)
+      if @portfolio.update!(portfolio_params)
         format.turbo_stream
         format.html { redirect_to portfolio_url(@portfolio), notice: 'Portfolio was successfully updated.' }
       else
@@ -41,6 +39,7 @@ class PortfoliosController < ApplicationController
       format.html do
         redirect_back(fallback_location: overview_index_path, notice: 'Portfolio was successfully destroyed.')
       end
+      format.turbo_stream
     end
   end
 

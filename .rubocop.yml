@@ -9,6 +9,14 @@ Style/Documentation:
 Metrics/MethodLength:
   Max: 15
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - 'spec/**/*'
+
 Lint/MissingSuper:
   Exclude:
     - 'app/services/**/*'

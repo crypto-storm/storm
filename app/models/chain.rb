@@ -4,10 +4,17 @@ class Chain < ApplicationRecord
   include PolymorphicSelect
 
   has_one_attached :logo
+
   has_one :native_token, class_name: 'Token', foreign_key: 'native_chain_id', dependent: :destroy,
                          inverse_of: :native_chain
 
+  has_many :transaction_data, as: :location, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true
 
-  has_many :transaction_data, as: :location, dependent: :destroy
+  def equals?(other)
+    name == other.name &&
+      native_token == other.native_token &&
+      transaction_datum_ids == other.transaction_datum_ids
+  end
 end

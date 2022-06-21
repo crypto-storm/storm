@@ -50,19 +50,29 @@ class Transaction < ApplicationRecord
     end
   end
 
+  def equals?(other)
+    (tx_in.nil? || tx_in.equals?(other.tx_in)) &&
+      (tx_out.nil? || tx_out&.equals?(other.tx_out)) &&
+      portfolio == other.portfolio
+  end
+
   private
 
   def reset_views
     RebuildPortfolioViewsJob.perform_later
   end
 
+  # rubocop:disable Metrics/AbcSize
   def enough_liquidity
-    return if purchase?
+    return if tx_out.nil? || errors.any? || purchase?
 
     liquidity = BuildPortfolio.call(portfolio)[tx_out.token.id]
 
-    errors.add(:base, "Not enough #{tx_out.token.abbr} to finish #{type}!") if liquidity.amount < tx_out.amount
+    return unless liquidity&.amount.to_i < tx_out&.amount.to_i
+
+    errors.add(:base, "Not enough #{tx_out.token.abbr} to finish #{type}!")
   end
+  # rubocop:enable Metrics/AbcSize
 
   def not_empty
     errors.add(:base, 'Must have a transaction datum') unless tx_in.present? || tx_out.present?
