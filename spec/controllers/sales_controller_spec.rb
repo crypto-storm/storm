@@ -16,7 +16,10 @@ RSpec.describe SalesController, type: :controller do
     params
   end
 
-  before { create(:transaction, :purchase, portfolio:, token:, amount: 10_000) }
+  before do
+    create(:transaction, :purchase, portfolio:, token:, amount: 10_000)
+    PortfolioOverviews.refresh
+  end
 
   describe 'GET new' do
     before { get :new }

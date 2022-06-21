@@ -4,17 +4,22 @@ RSpec.describe TransactionsController, type: :controller do
   let(:portfolio) { create(:portfolio) }
   let(:token) { create(:token) }
   let(:location) { create(:chain) }
+  let(:date) { DateTime.now }
+  let(:rate) { 1 }
 
-  let(:trade) { build(:transaction, :trade, portfolio:, token:) }
+  let(:trade) { build(:transaction, :trade, portfolio:, token:, date:, rate:) }
   let(:tx_in_params) do
-    build(:transaction, :purchase, token:, location:).tx_in.slice('amount', 'rate', 'location', 'token_id')
+    build(:transaction, :purchase, token:, location:, rate:, amount: 100).tx_in.slice('amount', 'rate', 'location', 'token_id')
   end
 
   let(:tx_out_params) do
-    build(:transaction, :sale, token:, location:).tx_out.slice('amount', 'rate', 'location', 'token_id')
+    build(:transaction, :sale, token:, location:, rate:, amount: 100).tx_out.slice('amount', 'rate', 'location', 'token_id')
   end
 
-  let(:purchase) { create(:transaction, :purchase, portfolio:, token:, amount: 10_000) }
+  before do
+    create(:transaction, :purchase, portfolio:, token:, amount: 10_000)
+    PortfolioOverviews.refresh
+  end
 
   def build_params_for_form(tx_params)
     params = tx_params.dup
@@ -36,7 +41,6 @@ RSpec.describe TransactionsController, type: :controller do
 
   describe 'GET edit' do
     before do
-      purchase
       trade.save!
 
       get :edit, params: { id: trade.id }
@@ -52,7 +56,6 @@ RSpec.describe TransactionsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:date) { DateTime.now }
     let(:request) do
       post :create,
            params: {
@@ -67,14 +70,13 @@ RSpec.describe TransactionsController, type: :controller do
 
     before do
       portfolio
-      purchase
       trade.save!
     end
 
     it 'assigns @transaction' do
       request
 
-      transaction = Transaction.new(date:, portfolio:)
+      transaction = Transaction.new(date: trade.date, portfolio:)
       transaction.build_tx_in(tx_in_params)
       transaction.build_tx_out(tx_out_params)
       transaction.tx_out.amount = -transaction.tx_out.amount
@@ -94,7 +96,6 @@ RSpec.describe TransactionsController, type: :controller do
 
   describe 'PUT update' do
     before do
-      purchase
       trade.save!
 
       put :update,
@@ -122,10 +123,7 @@ RSpec.describe TransactionsController, type: :controller do
   describe 'DELETE destroy' do
     let(:request) { delete :destroy, params: { id: trade.id }, format: :turbo_stream }
 
-    before do
-      purchase
-      trade.save!
-    end
+    before { trade.save! }
 
     it 'assigns @transaction' do
       request
