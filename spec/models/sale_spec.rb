@@ -13,6 +13,7 @@ RSpec.describe 'Purchase', type: :model do
     describe 'with liquidity' do
       before do
         create(:transaction, :purchase, token:, portfolio:, amount: 1000)
+        PortfolioOverviews.refresh
       end
 
       it 'is valid with valid attributes' do

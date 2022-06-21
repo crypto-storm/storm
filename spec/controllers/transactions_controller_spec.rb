@@ -7,7 +7,7 @@ RSpec.describe TransactionsController, type: :controller do
   let(:date) { DateTime.now }
   let(:rate) { 1 }
 
-  let(:trade) { build(:transaction, :trade, portfolio:, token:, date:, rate:) }
+  let(:trade) { build(:transaction, :trade, portfolio:, token_in: token, token_out: token, date:, rate:) }
   let(:tx_in_params) do
     build(:transaction, :purchase, token:, location:, rate:, amount: 100).tx_in.slice('amount', 'rate', 'location', 'token_id')
   end

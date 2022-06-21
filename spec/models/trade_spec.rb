@@ -6,7 +6,7 @@ RSpec.describe 'Trade', type: :model do
   let(:token) { create(:token) }
   let(:portfolio) { create(:portfolio) }
 
-  let(:trade) { build(:transaction, :trade, token:, portfolio:) }
+  let(:trade) { build(:transaction, :trade, token_in: token, token_out: token, portfolio:) }
   let(:purchase) { build(:transaction, :purchase, token:, portfolio:) }
 
   describe 'validations' do
@@ -32,7 +32,10 @@ RSpec.describe 'Trade', type: :model do
     describe 'are correctly calculated for' do
       let(:trade) { build(:transaction, :trade, tx_in:, tx_out:, portfolio:) }
 
-      before { create(:transaction, :purchase, token: token_out, portfolio:, amount: 10_000) }
+      before do
+        create(:transaction, :purchase, token: token_out, portfolio:, amount: 10_000)
+        PortfolioOverviews.refresh
+      end
 
       it 'tx_out' do
         trade.save!

@@ -20,7 +20,10 @@ RSpec.describe 'Sales management', type: :system do
   end
 
   describe 'create' do
-    before { purchase }
+    before do
+      purchase
+      PortfolioOverviews.refresh
+    end
 
     it do
       visit '/transactions'
