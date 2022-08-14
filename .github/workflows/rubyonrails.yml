@@ -7,9 +7,9 @@
 name: "Ruby on Rails CI"
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -59,3 +59,6 @@ jobs:
         run: bin/brakeman -q -w2
       - name: Lint Ruby files
         run: bin/rubocop --parallel
+      - name: Lint Factories
+        run: bundle exec rake factory_bot:lint
+

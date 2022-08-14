@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class ChainsController < ApplicationController
-  before_action :set_chain, only: %i[show edit update destroy]
+  before_action :set_chain, only: %i[edit update destroy]
 
   def index
     @chains = Chain.includes(logo_attachment: :blob).order(:created_at)
   end
-
-  def show; end
 
   def new
     @chain = Chain.new
@@ -19,7 +17,7 @@ class ChainsController < ApplicationController
     @chain = Chain.new(chain_params)
 
     respond_to do |format|
-      if @chain.save
+      if @chain.save!
         format.html { redirect_to chain_url(@chain), notice: 'Chain was successfully created.' }
         format.turbo_stream
       else
@@ -30,7 +28,7 @@ class ChainsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @chain.update(chain_params)
+      if @chain.update!(chain_params)
         format.turbo_stream
         format.html { redirect_to chain_url(@chain), notice: 'Chain was successfully updated.' }
       else
