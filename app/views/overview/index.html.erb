@@ -1,17 +1,18 @@
+Hi
 <div>
   <% if @assets.empty? %>
     <h1 class="font-bold text-3xl text-center">Add some <%= link_to "transactions", transactions_path, class: "text-blue-600" %> and then you can come back here!</h1>
   <% else %>
     <div class="flex">
-      <div>
+      <div id="distribution" value="abc">
         <%= render "overview/charts/pie_chart", distribution: @distribution %>
       </div>
-      <div>
+      <div id="evolution">
         <%= render "overview/charts/evolution_chart", evolution: @evolution[:yearly_by_day], type: "1Y" %>
       </div>
     </div>
 
-    <div class="mt-10">
+    <div id="tokens" class="mt-10">
       <%= render "overview/portfolio", assets: @assets %>
     </div>
   <% end %>
